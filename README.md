@@ -9,3 +9,14 @@ download test.csv, train.csv to git root folder
  - data_check.py
  - feature_engineering.py
  - modeling.py
+ 
+3. requirment
+ - python 2.7.6
+ - pandas
+ - seaborn
+ - matplotlib
+ - numpy
+ - scipy
+ - sklearn
+ - xgboost
+ - statsmodels
