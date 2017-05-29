@@ -123,6 +123,8 @@ df = training.loc[:,tcols].dropna()
 X = df.loc[:,cols]
 y = np.ravel(df.loc[:,['Survived']])
 
+print df.head(1)
+
 clf_log = LogisticRegression()
 clf_log = clf_log.fit(X,y)
 score_log = cross_val_score(clf_log, X, y, cv=5).mean()
@@ -145,7 +147,7 @@ clf_rf = RandomForestClassifier(
     )
 clf_rf = clf_rf.fit(X,y)
 score_rf = cross_val_score(clf_rf, X, y, cv=5).mean()
-print(score_rf)
+print("rf",score_rf)
 print (pd.DataFrame(list(zip(X.columns, np.transpose(clf_rf.feature_importances_))) \
             ).sort_values(1, ascending=False))
 
@@ -157,7 +159,9 @@ clf_xgb = xgb.XGBClassifier(
     )
 clf_xgb.fit(X,y)
 score_xgb = cross_val_score(clf_xgb, X, y, cv=5).mean()
-print(score_xgb)
+print("xgb",score_xgb)
+print (pd.DataFrame(list(zip(X.columns, np.transpose(clf_xgb.feature_importances_))) \
+            ).sort_values(1, ascending=False))
 
 clf_xgb_grid = xgb.XGBClassifier(
     max_depth=2,
@@ -181,9 +185,9 @@ clf_xgb_grid = xgb.XGBClassifier(
     learning_rate=0.1
     )
 clf_xgb_grid.fit(X,y)
-score_xgb = cross_val_score(clf_xgb_grid, X, y, cv=5).mean()
-print(score_xgb)
-print (pd.DataFrame(list(zip(X.columns, np.transpose(clf_xgb_grid.feature_importances_))) \
+score_xgb_grid = cross_val_score(clf_xgb_grid, X, y, cv=5).mean()
+print("xgb grid",score_xgb_grid)
+print ("xgb grid",pd.DataFrame(list(zip(X.columns, np.transpose(clf_xgb_grid.feature_importances_))) \
             ).sort_values(1, ascending=False))
 
 clf_vote = VotingClassifier(
@@ -202,7 +206,7 @@ print("Voting: Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std()))
 
 
 df2 = test.loc[:,cols].fillna(method='pad')
-clf = clf_vote
+print df2.head(1)
 clf_list = [clf_vote, clf_rf, clf_xgb_grid, clf_log, clf_knn]
 clf_name = ['vote', 'rf', 'xgb_grid', 'clf_log', 'clf_knn']
 
